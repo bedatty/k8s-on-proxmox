@@ -104,7 +104,7 @@ install_k3s() {
   local node_name="${1:-control.k8s}"
   
   msg_info "Installing K3s control plane"
-  curl -sfL https://get.k3s.io | sh -s - \
+  curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=latest sh -s - \
     --disable traefik \
     --node-name "$node_name" \
     --write-kubeconfig-mode 644
@@ -147,7 +147,7 @@ show_cluster_info() {
   kubectl get nodes 2>/dev/null || echo "  (K3s is starting...)"
   
   echo -e "\n  ${YW}To join worker nodes, run on each worker:${CL}"
-  echo -e "    curl -sfL https://get.k3s.io | K3S_URL=https://${cluster_ip}:6443 K3S_TOKEN=${node_token} sh -s - --node-name <worker-name>"
+  echo -e "    curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=latest K3S_URL=https://${cluster_ip}:6443 K3S_TOKEN=${node_token} sh -s - --node-name <worker-name>"
   
   echo -e "\n  ${YW}Kubeconfig location:${CL}"
   echo -e "    /etc/rancher/k3s/k3s.yaml"

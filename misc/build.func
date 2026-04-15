@@ -363,7 +363,7 @@ install_k3s_control() {
   ensure_kmsg_exists "$ctid"
   
   msg_start "Installing K3s control plane on ${node_name}"
-  pct exec "$ctid" -- bash -c "curl -sfL https://get.k3s.io | sh -s - --disable traefik --node-name ${node_name}"
+  pct exec "$ctid" -- bash -c "curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=latest sh -s - --disable traefik --node-name ${node_name}"
   msg_ok_nl "Installed K3s control plane on ${node_name}"
 }
 
@@ -395,7 +395,7 @@ install_k3s_worker() {
   ensure_kmsg_exists "$ctid"
   
   msg_start "Joining worker ${node_name} to cluster"
-  pct exec "$ctid" -- bash -c "curl -sfL https://get.k3s.io | K3S_URL=https://${control_ip}:6443 K3S_TOKEN=${token} sh -s - --node-name ${node_name}"
+  pct exec "$ctid" -- bash -c "curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=latest K3S_URL=https://${control_ip}:6443 K3S_TOKEN=${token} sh -s - --node-name ${node_name}"
   msg_ok_nl "Joined worker ${node_name} to cluster"
 }
 

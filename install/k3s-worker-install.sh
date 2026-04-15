@@ -107,6 +107,7 @@ join_cluster() {
   
   msg_info "Joining K3s cluster as worker"
   curl -sfL https://get.k3s.io | \
+    INSTALL_K3S_CHANNEL=latest \
     K3S_URL="https://${control_ip}:6443" \
     K3S_TOKEN="${token}" \
     sh -s - --node-name "$node_name"
